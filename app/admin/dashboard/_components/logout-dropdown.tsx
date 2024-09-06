@@ -17,7 +17,7 @@ const LogoutDropdown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
-          <LogoutBtn redirectUrl="/admin/login" />
+          <LogoutBtn />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
