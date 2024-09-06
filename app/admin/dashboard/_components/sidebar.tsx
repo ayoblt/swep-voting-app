@@ -84,7 +84,7 @@ const DashBoardNavItems: DashBoardNavItemsProps[] = [
   //   icon: <GearIcon className="h-5 w-5" />,
   // },
 ];
-export const SideBar = () => {
+export const SideBar = ({handleSheetOpen}: {handleSheetOpen: () => void}) => {
   const pathName = usePathname();
   return (
     <>
@@ -131,6 +131,7 @@ export const SideBar = () => {
                           <Link
                             key={route.href}
                             href={route.href}
+                            onClick={handleSheetOpen}
                             className={cn(
                               'py-1 md:text-base hover:text-primary',
                               pathName === route.href && 'text-primary'
@@ -144,7 +145,7 @@ export const SideBar = () => {
                   </Accordion>
                 ) : (
                   <Link
-
+                    onClick={handleSheetOpen}
                     href={item.href}
                     className={cn(
                       'flex gap-x-4 items-center nav-item text-lg lg:text-xl before:absolute px-6 py-2.5 ',
