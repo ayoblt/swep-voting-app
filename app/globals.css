@@ -2,32 +2,175 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    /* --primary: 207 95% 8%; */
+    --primary: 210 67% 43%;
+    /* --primary: 221.2 83.2% 53.3%; */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 207 95% 8%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 225 32% 73%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 207 95% 8%;
+    --foreground: 210 40% 98%;
+    --card: 207 95% 6%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 67% 43%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* ::-webkit-datetime-edit {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  position: relative;
+} */
+/*
+::-webkit-datetime-edit-fields-wrapper {
+  width: 100%;
+} */
+/* ::-webkit-datetime-edit-text {
+  color: red;
+  padding: 0 0.3em;
+} */
+/* ::-webkit-datetime-edit-month-field {
+  color: blue;
+}
+::-webkit-datetime-edit-day-field {
+  color: green;
+}
+::-webkit-datetime-edit-year-field {
+  color: purple;
+} */
+/* ::-webkit-inner-spin-button {
+  display: none;
+}
+::-webkit-calendar-picker-indicator {
+  display: block;
+  margin-left: auto;
+
+  justify-self: flex-end;
+} */
+/*
+input[type='date'] {
+  -webkit-align-items: center;
+  display: -webkit-flex;
+  width: 100%;
+  -webkit-justify-content: space-between;
+  justify-content: -webkit-space-between;
+  font-family: monospace;
+  overflow: hidden;
+  -webkit-padding-start: 1px;
+} */
+
+/* input::-webkit-datetime-edit {
+  -webkit-flex: 1;
+  -webkit-user-modify: read-only !important;
+  display: inline-block;
+  min-width: 0;
+  overflow: hidden;
+} */
+
+/* input::-webkit-datetime-edit-fields-wrapper {
+  -webkit-user-modify: read-only !important;
+  display: inline-block;
+  padding: 1px 0;
+  white-space: pre;
+}
+
+*/
+input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 0.8em;
+}
+input[type='date'] {
+  position: relative;
+}
+input[type='time'] {
+  position: relative;
+}
+
+/* .date-picker-container {
+  position: relative;
+  display: inline-block;
+} */
+
+/* .date-picker-container input[type='date'] {
+  padding-right: 2.5rem;
+  font-size: 16px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.calendar-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1.2rem;
+  color: #555;
+} */
+
+input[type='file' i] {
+  text-align: center !important;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 1px; /* Set the width of the scrollbar */
+  height: 1px;
 }
