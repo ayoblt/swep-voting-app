@@ -84,7 +84,7 @@ const DashBoardNavItems: DashBoardNavItemsProps[] = [
   //   icon: <GearIcon className="h-5 w-5" />,
   // },
 ];
-export const SideBar = ({handleSheetOpen}: {handleSheetOpen: () => void}) => {
+export const SideBar = ({handleSheetOpen}: {handleSheetOpen?: () => void}) => {
   const pathName = usePathname();
   return (
     <>
