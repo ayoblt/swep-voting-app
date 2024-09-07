@@ -1,36 +1,19 @@
 'use client';
 
 import { Logo } from '@/components/logo';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import {
   CardStackIcon,
-  DotsVerticalIcon,
-  FileTextIcon,
-  GearIcon,
-  HamburgerMenuIcon,
-  HomeIcon,
-  MagnifyingGlassIcon,
 } from '@radix-ui/react-icons';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname} from 'next/navigation';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import LogoutBtn from '@/components/logout-btn';
-import { logout } from '@/lib/session';
-import LogoutDropdown from './logout-dropdown';
+import LogoutBtn from "@/components/logout-btn";
 
 interface DashBoardNavItemsProps {
   label: string;
@@ -86,6 +69,8 @@ const DashBoardNavItems: DashBoardNavItemsProps[] = [
 ];
 export const SideBar = ({handleSheetOpen}: {handleSheetOpen?: () => void}) => {
   const pathName = usePathname();
+
+
   return (
     <>
       <div className="">
@@ -115,7 +100,7 @@ export const SideBar = ({handleSheetOpen}: {handleSheetOpen?: () => void}) => {
                       >
                         <div
                           className={cn(
-                            'flex gap-x-4 items-center text-lg lg:text-xl',
+                            'flex gap-x-4 items-center text-lg lg:text-xl mr-3',
                             pathName === item.href
                               ? 'text-primary before:opacity-100'
                               : 'text-card-foreground hover:text- group-hover:text-white'
@@ -164,29 +149,9 @@ export const SideBar = ({handleSheetOpen}: {handleSheetOpen?: () => void}) => {
         </div>
       </nav>
 
-      <div className="bg-primary rounded-md p-4 max-lg:md:p-2 flex items-center gap-x-2 text-white overflow-hidden relative mt-auto">
-        <div className="absolute top-3 right-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <DotsVerticalIcon className="h-4 w-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem className="hover:bg-none">
-                <LogoutBtn />
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <div className="space-y-1">
-          <h4 className="text-xs font-semibold">Lateef Taiwo</h4>
-          <p className="text-[10px] font-medium">
-            lateeftaiwo@student.oauife.edu.ng
-          </p>
-        </div>
+      <div className="mt-auto">
+
+      <LogoutBtn />
       </div>
     </>
   );

@@ -10,9 +10,8 @@ const DesktopSideBar = () => {
       // >
       //
       // </div>
-      <div className="h-full bg-card flex flex-col justify-between">
+      // <div className="h-full bg-card flex flex-col justify-between">
         <SideBar/>
-      </div>
   );
 };
 

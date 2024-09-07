@@ -28,6 +28,7 @@ export default function RootLayout({
             defaultTheme="light"
             disableTransitionOnChange
           >
+
             <ElectionFormProvider>
               <main>{children}</main>
               <Toaster position="top-right" richColors />

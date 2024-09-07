@@ -25,7 +25,7 @@ export const verifySession = cache(async () => {
     redirect(loginUrl);
   }
 
-  return { isAuth: true, token: session.token, is_admin: session.is_admin };
+  return { isAuth: true, token: session.token as string, is_admin: session.is_admin as boolean };
 });
 
 export const getAllCollection = async () => {
