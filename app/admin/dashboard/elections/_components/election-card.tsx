@@ -3,13 +3,13 @@ import { Separator } from '@/components/ui/separator';
 import { formatDate, formatTime } from '@/lib/utils';
 
 const ElectionCard = ({ collection }: { collection: any }) => {
-  let totalCandidates = 0;
+  // let totalCandidates = 0;
 
-  collection.polls.forEach((poll: any) => {
-    totalCandidates += poll.no_of_options;
-  });
+  // collection.polls.forEach((poll: any) => {
+  //   totalCandidates += poll.no_of_options;
+  // });
 
-  console.log('Total Candidates', totalCandidates);
+  // console.log('Total Candidates', collection.no_of_polls);
   return (
     <div className="border rounded-lg px-5 py-6 shadow-md bg-card">
       <div>
@@ -54,17 +54,17 @@ const ElectionCard = ({ collection }: { collection: any }) => {
             Number of Positions:{' '}
           </h3>
           <p className="text-muted-foreground font-medium text-sm">
-            {collection.polls.length}
+            {collection.no_of_polls}
           </p>
         </div>
-        <div className="flex gap-x-2">
-          <h3 className="font-semibold text-foreground/80 text-sm">
-            Total Candidates:{' '}
-          </h3>
-          <p className="text-muted-foreground font-medium text-sm">
-            {totalCandidates}
-          </p>
-        </div>
+        {/*<div className="flex gap-x-2">*/}
+        {/*  <h3 className="font-semibold text-foreground/80 text-sm">*/}
+        {/*    Total Candidates:{' '}*/}
+        {/*  </h3>*/}
+        {/*  <p className="text-muted-foreground font-medium text-sm">*/}
+        {/*    {collection.no_of_polls}*/}
+        {/*  </p>*/}
+        {/*</div>*/}
       </div>
     </div>
   );

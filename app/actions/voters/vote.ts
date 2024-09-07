@@ -15,8 +15,8 @@ const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
 export async function submitVotes(state: any, payload: Payload) {
   const { token } = await verifySession();
 
-  console.log(token);
-  console.log(JSON.stringify(payload))
+  // console.log(token);
+  // console.log(JSON.stringify(payload))
   if (!NEXT_PUBLIC_API_HOSTNAME) {
     console.error('API Hostname is not defined.');
     return {
@@ -25,7 +25,7 @@ export async function submitVotes(state: any, payload: Payload) {
       details: 'API Hostname is not configured.',
     };
   }
-
+  let redirectPath: string | null = null;
 
   try {
     const response = await fetch(
@@ -51,14 +51,16 @@ export async function submitVotes(state: any, payload: Payload) {
       };
     }
 
-    const responseData = await response.json();
+    // const responseData = await response.json();
     // console.log(`/vote?collection-id=${payload.collection_id}`)
-    revalidatePath(`/vote?collection-id=${payload.collection_id}`);
-    logout()
-    return {
-      success: true,
-      details: responseData.message,
-    };
+    // revalidatePath(`/vote/${payload.collection_id}`);
+    // return {
+    //   success: true,
+    //   details: responseData.message,
+    // };
+
+    redirectPath = "/vote/success"
+
   } catch (error) {
     console.error('Network or Server error:', error);
     return {
@@ -66,5 +68,10 @@ export async function submitVotes(state: any, payload: Payload) {
       code: 'SERVER_ERROR',
       details: 'A network error occurred. Please try again later.',
     };
+  } finally {
+    if (redirectPath) {
+      logout()
+      redirect("/vote/success")
+    }
   }
 }

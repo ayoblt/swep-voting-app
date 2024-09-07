@@ -37,7 +37,7 @@ function ErrorMessage({ children }: { children: React.ReactNode }) {
   return <>{!pending && <>{children}</>}</>;
 }
 
-export function VoterLoginForm({ collection_id }: { collection_id: string | undefined }) {
+export function VoterLoginForm({ collection_id }: { collection_id: string }) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const { setEmail, setCollectionId } = useAppContext();
@@ -58,15 +58,11 @@ export function VoterLoginForm({ collection_id }: { collection_id: string | unde
   });
 
   useEffect(() => {
-    // if (!state || !state.data?.email) {
-    //   console.log('No state or collection_id', state);
-    //   return;
-    // }
     if (state.details) {
-      if (state.success && state.data?.email && collection_id) {
+      if (state.success && state.data?.email) {
         setCollectionId(collection_id);
         setEmail(state.data?.email);
-        console.log(state.data.email);
+        // console.log(state.data.email);
         toast.info(
           'Please verify your email to continue (Do not refresh the page)'
         );
@@ -89,7 +85,7 @@ export function VoterLoginForm({ collection_id }: { collection_id: string | unde
     startTransition(async () => {
       await formAction({ email: values.email, collection_id });
     });
-    console.log(values);
+    // console.log(values);
   }
 
   return (

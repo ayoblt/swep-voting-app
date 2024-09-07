@@ -58,16 +58,18 @@ export default function Dashboard({ data }: { data: VotingData }) {
   // toast.success("Hello world")
 
   useEffect(() => {
-    console.log(state)
-    if (state.success) {
-      toast.success('Your votes has been submitted successfully');
-      router.push('/votes/success');
-    } else {
-      console.log(state.details)
-      if(state.details) {
-        toast.error(state.details);
+    // console.log(state)
+    if (state) {
+      if (state.success) {
+        toast.success('Your votes has been submitted successfully');
+        // console.log('success');
+      } else {
+        // console.log(state.details)
+        if (state.details) {
+          toast.error(state.details);
+        }
       }
-    }
+  }
   }, [state, router]);
 
   useEffect(() => {
@@ -77,13 +79,13 @@ export default function Dashboard({ data }: { data: VotingData }) {
   }, [data]);
 
   // If data has no polls, return a fallback message
-  if (!data.polls || data.polls.length === 0) {
-    return (
-      <div className="grid place-content-center place-items-center h-screen w-full">
-        <h1>No polls available</h1>
-      </div>
-    );
-  }
+  // if (!data.polls || data.polls.length === 0) {
+  //   return (
+  //     <div className="grid place-content-center place-items-center h-screen w-full">
+  //       <h1>No polls available</h1>
+  //     </div>
+  //   );
+  // }
 
   const handleVote = (poll_id: string, option: Option) => {
     setVotes({
@@ -93,7 +95,7 @@ export default function Dashboard({ data }: { data: VotingData }) {
         option_value: option.value,
       },
     });
-    console.log(votes)
+    // console.log(votes)
   };
 const handleRemoveVote = (poll_id: string) => {
   if (!votes || !votes[poll_id]) return; // Do nothing if no vote exists for this poll
@@ -102,12 +104,12 @@ const handleRemoveVote = (poll_id: string) => {
   delete updatedVotes[poll_id]; // Remove the vote for the given poll
 
   setVotes(updatedVotes); // Update the state
-  console.log(updatedVotes); // Log the updated votes
+  // console.log(updatedVotes); // Log the updated votes
 };
 
 const handleSubmitVotes = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault()
-  console.log('submitting')
+  // console.log('submitting')
   // console.log(votes)
   const payload: Payload = {
     collection_id: data.id,
@@ -117,9 +119,9 @@ const handleSubmitVotes = async (e: React.FormEvent<HTMLFormElement>) => {
       option_value: vote?.option_value || '',
     })),
 };
-  console.log(payload)
-  startTransition(async () => {
-      await formAction(payload)
+  // console.log(payload)
+  startTransition(() => {
+      formAction(payload)
     });
 
 }
@@ -130,7 +132,7 @@ const handleSubmitVotes = async (e: React.FormEvent<HTMLFormElement>) => {
       {/*    'shadow-md border-r flex-col justify-between bg-card relative h-full'*/}
       {/*  )}*/}
       {/*>*/}
-        <div className="max-md:hidden fixed inset-y-0 py-10 px-7 flex flex-col justify-between border-r bg-card z-[9999]">
+        <div className="max-md:hidden md:w-[250px] lg:w-[300px] fixed inset-y-0 py-10 px-7 flex flex-col justify-between border-r bg-card z-[9999]">
           <SideBar
             polls={data.polls}
             selectedPoll={selectedPoll}
@@ -138,7 +140,7 @@ const handleSubmitVotes = async (e: React.FormEvent<HTMLFormElement>) => {
           />
         </div>
       {/*</div>*/}
-      <div className="flex flex-col md:ml-[300px] lg:ml-[320px]">
+      <div className="flex flex-col md:ml-[250px] lg:ml-[300px]">
         <header className="flex h-16 items-center justify-between gap-4 border-b px-4 md:h-20 lg:px-6">
            {/*<MobileHeader*/}
            {/*    polls={data.polls}*/}
@@ -162,7 +164,8 @@ const handleSubmitVotes = async (e: React.FormEvent<HTMLFormElement>) => {
 
             <form onSubmit={handleSubmitVotes}>
 
-            <SubmitBtn className="md:self-end" isPending={isPending}>Submit Votes</SubmitBtn>
+
+            <SubmitBtn className="md:self-end w-full" isPending={isPending}>Submit Votes</SubmitBtn>
             </form>
           </div>
         </main>

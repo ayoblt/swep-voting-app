@@ -21,17 +21,22 @@ export const publicRoutes = [
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone()
   const path = url.pathname;
-  const query = url.searchParams;
+  // const query = url.searchParams;
 
-  const newLoginUrl = new URL("/login", req.url)
+  const pathSegments = path.split('/');
+  const dynamicId = pathSegments.length > 2 ? pathSegments[2] : '';
+  // console.log(dynamicId)
+
+  const newLoginUrl = new URL(`/login/${dynamicId}`, req.url)
   const newAdminLoginUrl = new URL("/admin/accounts/login", req.url)
 
-  query.forEach((value, key) => {
-        newLoginUrl.searchParams.append(key, value);
-    });
-  query.forEach((value, key) => {
-        newAdminLoginUrl.searchParams.append(key, value);
-    });
+
+  // query.forEach((value, key) => {
+  //       newLoginUrl.searchParams.append(key, value);
+  //   });
+  // query.forEach((value, key) => {
+  //       newAdminLoginUrl.searchParams.append(key, value);
+  //   });
 
 
 
@@ -39,7 +44,7 @@ export default async function middleware(req: NextRequest) {
     path.startsWith(route)
   );
   const isUserProtectedRoute = userProtectedRoutes.some((route) =>
-    path.startsWith(route)
+    path.startsWith(`/vote/${dynamicId}`)
   );
   const isPublicRoute = publicRoutes.includes(path);
 
@@ -50,7 +55,7 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.next()
     }
     if (isAdminProtectedRoute) {
-      return NextResponse.redirect(new URL('/admin/accounts/login', req.url));
+      return NextResponse.redirect(new URL(newAdminLoginUrl, req.url));
     }
     if (isUserProtectedRoute) {
       return NextResponse.redirect(newLoginUrl);
@@ -62,7 +67,7 @@ export default async function middleware(req: NextRequest) {
     const session = await decrypt(cookie);
     if (!session || !session?.token) {
       if (isAdminProtectedRoute) {
-        return NextResponse.redirect(new URL('/admin/accounts/login', req.url));
+        return NextResponse.redirect(new URL(newAdminLoginUrl, req.url));
       }
       if (isUserProtectedRoute) {
         return NextResponse.redirect(newLoginUrl);
@@ -80,8 +85,8 @@ export default async function middleware(req: NextRequest) {
           );
         }
       } else {
-        if (path === '/login') {
-          return NextResponse.redirect(new URL(`/vote?collection-id=${query.get("collection-id")}`, req.url));
+        if (path === `/login/${dynamicId}` ) {
+          return NextResponse.redirect(new URL(`/vote/${dynamicId}`, req.url));
         }
       }
       return NextResponse.next();
@@ -101,7 +106,7 @@ export default async function middleware(req: NextRequest) {
   } catch (error) {
     console.error('Error decrypting session:', error);
     if (isAdminProtectedRoute) {
-      return NextResponse.redirect(new URL('/admin/accounts/login', req.url));
+      return NextResponse.redirect(new URL(newAdminLoginUrl, req.url));
     }
     if (isUserProtectedRoute) {
       return NextResponse.redirect(newLoginUrl);

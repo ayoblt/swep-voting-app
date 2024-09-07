@@ -65,8 +65,8 @@ export function VoterInputOTPForm() {
     if (state.details) {
       if (state.success) {
         toast.success('Login successful');
-        console.log('something');
-        router.push('/vote?collection-id=' + collection_id);
+        // console.log('something');
+          router.push(`/vote/${collection_id}`);
       }
     }
   }, [state.details, state.success, router, collection_id]);

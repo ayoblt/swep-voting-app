@@ -8,7 +8,7 @@ const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
 
 export const verifySession = cache(async () => {
   const session = await getSession();
-  console.log('session', session);
+  // console.log('session', session);
   // const isAdminProtectedRoute = adminProtectedRoutes.some((route) =>
   //   path.startsWith(route)
   // );
@@ -59,7 +59,13 @@ export const getAllCollection = async () => {
   }
 };
 export const getCollection = async (collectionId: string) => {
-  const session = await verifySession();
+  try {
+    const session = await verifySession();
+
+    if (!session || !session.token) {
+      throw new Error('Invalid session or missing token');
+    }
+
   const response = await fetch(
     `${NEXT_PUBLIC_API_HOSTNAME}/api/manage/collection/fetch?collection_id=${collectionId}`,
     {
@@ -68,7 +74,18 @@ export const getCollection = async (collectionId: string) => {
       },
     }
   );
-  return response.json();
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const responseJSON = await response.json();
+    // console.log('response', responseJSON.data.collections);
+    return responseJSON.data;
+  } catch (error) {
+    console.error('Error fetching collection:', error);
+    return null;
+  }
 };
 
 export const checkCollectionExists = async (collectionId: string) => {
@@ -82,9 +99,8 @@ export const checkCollectionExists = async (collectionId: string) => {
 
 export const getVotersCollection = async (collection_id: string) => {
   try {
-    console.log('something');
     const session = await verifySession();
-    console.log('session', session);
+    // console.log('session', session);
     const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/voters/fetch-collection?collection_id=${collection_id}`,
       {
@@ -93,10 +109,10 @@ export const getVotersCollection = async (collection_id: string) => {
         },
       }
     );
-    console.log(session.token);
+    // console.log(session.token);
 
     if (!response.ok) {
-      console.log('response', response);
+      // console.log('response', response);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 

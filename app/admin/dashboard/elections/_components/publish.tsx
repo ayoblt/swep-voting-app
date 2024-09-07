@@ -18,9 +18,10 @@ import { CandidatePosition } from './candidates-form';
 import { toast } from 'sonner';
 import { useFormState } from 'react-dom';
 import { createElection } from '@/app/actions/admin/election';
-import { useEffect } from 'react';
+import {useEffect, useTransition} from 'react';
 import { useRouter } from 'next/navigation';
 import {ScrollArea} from "@/components/ui/scroll-area";
+import {SubmitBtn} from "@/components/submit-btn";
 
 const FormatCell = ({ children }: { children: React.ReactNode }) => {
   return <div className="font-medium">{children}</div>;
@@ -131,6 +132,7 @@ const Publish = () => {
     details: '',
     errors: [],
   });
+  const [isPending, startTransition] = useTransition()
   const electionInfoList = [electionFormState.electionInfo];
 
   useEffect(() => {
@@ -167,7 +169,7 @@ const Publish = () => {
     // console.log({ electionFormState });
 
     if (errorMessage) {
-      console.log(errorMessage);
+      // console.log(errorMessage);
       toast.warning(errorMessage);
     }
 
@@ -195,8 +197,11 @@ const Publish = () => {
         }
       });
     });
+    startTransition( async () => {
 
-    await formAction(formData);
+      const response = await formAction(formData);
+      // console.log("response for publish",response)
+    })
   };
 
   return (
@@ -258,12 +263,12 @@ const Publish = () => {
 
       <div className="mt-10">
         <div className="flex justify-center">
-          <button
-            type="submit"
+          <SubmitBtn
+              isPending={isPending}
             className="px-6 py-2 bg-blue-500 text-white rounded-lg"
           >
             Publish
-          </button>
+          </SubmitBtn>
         </div>
       </div>
     </form>
@@ -297,6 +302,7 @@ const convertElectionFormToApiFormat = (
   const { electionInfo, positions, candidates, voterInfo } = formData;
 
   // Convert date and time to ISO format for start and end times
+  // console.log(electionInfo)
   const startDateTime = new Date(
     `${electionInfo.startDate}T${electionInfo.startTime}:00`
   ).toISOString();

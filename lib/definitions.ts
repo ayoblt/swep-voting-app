@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import App from "next/app";
 
 const matricNoRegex = /^[A-Z]{3}\/\d{4}\/\d{3}$/i;
 const regNoRegex = /^\d{8}[A-Z]{2}$/;
@@ -125,18 +126,18 @@ export interface ElectionFormContextType {
   prevStep: () => void;
 }
 
+
 export interface AppState {
-  email: string | null;
-  collection_id: string | null;
-  // setCollectionId: (collectionId: string) => void;
-  // setEmail: (email: string) => void;
+  email: string;
+  collection_id: string;
 }
 
 export interface AppStatecontextType {
-  email: string | null;
-  collection_id: string | null;
+  email: string;
+  collection_id: string;
   setCollectionId: (collectionId: string) => void;
   setEmail: (email: string) => void;
+  clearUserDetails: () => void;
 }
 
 export type SessionPayload = {
@@ -205,4 +206,13 @@ interface Vote {
 export interface Payload {
   collection_id: string;
   votes: Vote[];
+}
+
+export type Collection = {
+  id: string;
+  title: string;
+  start_time: string;
+  end_time: string;
+  no_of_polls: number;
+  created: string
 }

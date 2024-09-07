@@ -91,9 +91,9 @@ export function formatTime(timeString: string) {
   }
 }
 
-export const formatDate = (dateTime: string) => {
+export const formatDate = (dateTime: string, weekdayLength?: "long" | "short" | "narrow") => {
   return new Date(dateTime).toLocaleString('en-US', {
-    weekday: 'long',
+    weekday: weekdayLength || 'long',
     year: 'numeric',
     month: 'short',
     day: 'numeric',

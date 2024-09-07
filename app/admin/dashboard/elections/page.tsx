@@ -1,13 +1,17 @@
-import { getAllCollection, getCollection } from '@/lib/dal';
-import CreateElectionStepCard from './_components/create-election-step-card';
-import ElectionInfoForm from './_components/election-info-form';
-import ElectionCard from './_components/election-card';
+import { getAllCollection } from '@/lib/dal';
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import {Separator} from "@/components/ui/separator";
+import {ColumnDef} from "@tanstack/react-table";
+import {DataTable} from "@/components/ui/data-table";
+import {ElectionListTable} from "@/app/admin/dashboard/elections/election-list-table";
+
+const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME || "http://localhost:8000";
+
 
 export default async function Election() {
   const collectionData = await getAllCollection();
-  console.log('Collection Data', collectionData);
+  // console.log('Collection Data', collectionData);
 
   if (!collectionData) return null;
 
@@ -25,14 +29,27 @@ export default async function Election() {
           </Button>
             </div>
         )}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ElectionListTable collectionData={collectionData} />
+        {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">*/}
 
-
-          {collectionData.map((collection: any) => (
-            <ElectionCard key={collection.id} collection={collection} />
-          ))}
-        </div>
+          {/*<ul className="list-disc space-y-3 mt-5">*/}
+          {/*  <h2>Elections</h2>*/}
+          {/*  <Separator />*/}
+          {/*</ul>*/}
+        {/*</div>*/}
       </div>
     </div>
   );
 }
+//   <li key={collection.id} className="ml-5">
+              //     <p className="flex h-5 items-center space-x-4 text-sm">
+              //
+              //     <Link href={`/admin/dashboard/elections/${collection.id}`} className="underline hover:no-underline">
+              //       {collection.title}
+              //     </Link>
+              //     <Separator orientation="vertical" />
+              //     <Link href={`${NEXT_DOMAIN_NAME}/login/${collection.id}`} className="text-primary underline hover:no-underline text-sm">
+              //       {`${NEXT_DOMAIN_NAME}/login/${collection.id}`}
+              //     </Link>
+              //     </p>
+              //   </li>

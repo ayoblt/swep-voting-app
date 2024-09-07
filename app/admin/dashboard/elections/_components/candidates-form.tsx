@@ -397,7 +397,7 @@ const CandidatesForm = () => {
         image: imageFile,
       });
     } else {
-      console.log('no image');
+      // console.log('no image');
       form.setError('image', {
         type: 'manual',
         message: 'Candidate Image is required',

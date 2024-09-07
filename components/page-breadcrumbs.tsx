@@ -31,7 +31,7 @@ export const PageBreadCrumbs = () => {
     };
   });
 
-  console.log({ pathname, paths, activePath, parentRoute });
+  // console.log({ pathname, paths, activePath, parentRoute });
   return (
     <Breadcrumb>
       <BreadcrumbList>

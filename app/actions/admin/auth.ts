@@ -121,6 +121,12 @@ export async function signin(state: AdminLoginFormState, formData: FormData) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Login API Error:', errorData);
+
+      if (errorData.message === "Account isn't verified") {
+        redirectPath = `/admin/accounts/verify`
+        redirect(redirectPath);
+      }
+
       return {
         success: false,
         code: 'INVALID_CREDENTIALS',

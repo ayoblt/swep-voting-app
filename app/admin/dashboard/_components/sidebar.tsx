@@ -50,10 +50,10 @@ const DashBoardNavItems: DashBoardNavItemsProps[] = [
         href: '/admin/dashboard/elections/create',
       },
 
-      {
-        label: 'Reports',
-        href: '/admin/dashboard/elections/reports',
-      },
+      // {
+      //   label: 'Reports',
+      //   href: '/admin/dashboard/elections/reports',
+      // },
     ],
   },
   // {

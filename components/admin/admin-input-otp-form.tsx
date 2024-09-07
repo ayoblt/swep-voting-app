@@ -35,7 +35,7 @@ import { useFormState } from 'react-dom';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { ErrorMessage } from '../error-message';
 import { SubmitBtn } from '../submit-btn';
-import { useEffect } from 'react';
+import {useEffect, useTransition} from 'react';
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -50,6 +50,7 @@ export function AdminInputOTPForm() {
     details: '',
     code: '',
   });
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -77,7 +78,7 @@ export function AdminInputOTPForm() {
   }, [state.details, state.success, router]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log('submitted');
+    // console.log('submitted');
     const formData = new FormData();
 
     if (!email) {
@@ -91,11 +92,14 @@ export function AdminInputOTPForm() {
     formData.append('code', data.pin);
     formData.append('email', email);
 
-    await formAction(formData);
+    startTransition( async () => {
+
+     await formAction(formData);
+    })
   }
 
   return (
-    <Card className="w-full max-w-md shadow-none rounded-none border-none bg-transparent">
+    <Card className="w-full max-w-md shadow-none rounded-none border-none bg-transparent p-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
           <CardHeader className="mb-7 px-0">
@@ -147,7 +151,7 @@ export function AdminInputOTPForm() {
               />
             </div>
           </CardContent>
-          <SubmitBtn>Verify</SubmitBtn>
+          <SubmitBtn isPending={isPending}>Verify</SubmitBtn>
         </form>
       </Form>
     </Card>

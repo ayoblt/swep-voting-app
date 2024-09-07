@@ -13,7 +13,7 @@ export async function login(
   state: VoterFormState,
   { email, collection_id }: { email: string; collection_id: string }
 ) {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
   if (!NEXT_PUBLIC_API_HOSTNAME) {
     console.error('API Hostname is not defined.');
     return {

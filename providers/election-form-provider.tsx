@@ -182,7 +182,7 @@ export const ElectionFormProvider: React.FC<{ children: React.ReactNode }> = ({
         positions: updatedPositions,
       };
     });
-    console.log('updateCandidateInfo', info);
+    // console.log('updateCandidateInfo', info);
   };
 
   const nextStep = () => {
