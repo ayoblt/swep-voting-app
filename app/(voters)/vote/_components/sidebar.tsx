@@ -47,7 +47,7 @@ export const SideBar = ({
         </div>
       </nav>
 
-      <div className="bg-primary rounded-md p-4 max-lg:md:p-2 flex items-center gap-x-2 text-white overflow-hidden relative mt-auto">
+      <div className="bg-primary rounded-md p-4 max-lg:md:p-2 flex items-center gap-x-2 text-white overflow-hidden relative mt-auto z-[999999]">
         <div className="absolute top-3 right-3">
           <DropdownMenu>
             <DropdownMenuTrigger>
