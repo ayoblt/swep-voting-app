@@ -114,7 +114,7 @@ const VoterInfoForm: React.FC = () => {
                         {...votersFileRef}
                         id="votersFileInput"
                         className="hidden"
-                        accept=".csv"
+                        accept=".csv, .xlsx"
                       />
                     </FormControl>
                     <FormMessage />
