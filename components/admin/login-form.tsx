@@ -91,28 +91,28 @@ export function AdminSigninForm() {
               required
             />
           </div>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="terms1"
-                className="rounded data-[state=checked]:dark:bg-primary dark:text-white text-white data-[state=checked]:bg-secondary border-secondary"
-              />
-              <label
-                htmlFor="terms1"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Keep me signed in
-              </label>
-            </div>
-            <div>
-              <Link
-                href="/admin/accounts/forgot-password"
-                className="ml-auto inline-block text-sm underline"
-              >
-                Forgot your password?
-              </Link>
-            </div>
-          </div>
+          {/*<div className="flex justify-between items-center">*/}
+          {/*  <div className="flex items-center space-x-2">*/}
+          {/*    <Checkbox*/}
+          {/*      id="terms1"*/}
+          {/*      className="rounded data-[state=checked]:dark:bg-primary dark:text-white text-white data-[state=checked]:bg-secondary border-secondary"*/}
+          {/*    />*/}
+          {/*    <label*/}
+          {/*      htmlFor="terms1"*/}
+          {/*      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"*/}
+          {/*    >*/}
+          {/*      Keep me signed in*/}
+          {/*    </label>*/}
+          {/*  </div>*/}
+          {/*  <div>*/}
+          {/*    <Link*/}
+          {/*      href="/admin/accounts/forgot-password"*/}
+          {/*      className="ml-auto inline-block text-sm underline"*/}
+          {/*    >*/}
+          {/*      Forgot your password?*/}
+          {/*    </Link>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
         </CardContent>
         <CardFooter>
           <SubmitBtn>Login</SubmitBtn>
