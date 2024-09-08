@@ -27,7 +27,7 @@ const columns: ColumnDef<Collection>[] = [
     const collection = row.original;
     // console.log(candidate);
 
-    return <Link href={`${NEXT_DOMAIN_NAME}/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}</Link>
+    return <a href={`${NEXT_DOMAIN_NAME}/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}</a>
   },
   },
 ];

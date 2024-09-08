@@ -57,7 +57,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <Separator />
           <div className="flex max-lg:flex-col gap-x-4 lg:items-end">
               <h3 className="md:text-lg lg:text-xl font-semibold">Voters Link :</h3>
-              <Link href={`${NEXT_DOMAIN_NAME}/login/${collection_id}`} className="border-b text-primary">{`${NEXT_DOMAIN_NAME}/login/${collection_id}`}</Link>
+              <a href={`${NEXT_DOMAIN_NAME}/login/${collection_id}`} className="border-b text-primary">{`${NEXT_DOMAIN_NAME}/login/${collection_id}`}</a>
           </div>
           <Separator />
           <div className="space-y-16">
