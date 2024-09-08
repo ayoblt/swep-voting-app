@@ -2,6 +2,8 @@ import MobileHeader from './_components/mobile-header';
 import { PageBreadCrumbs } from '@/components/page-breadcrumbs';
 import ThemeToggler from '@/components/theme-toggler';
 import {SideBar} from "@/app/admin/dashboard/_components/sidebar";
+import {Suspense} from "react";
+import Loading from "@/app/loading";
 
 export default function AdminDashboardLayout({
   children,
@@ -35,8 +37,15 @@ export default function AdminDashboardLayout({
                 <div className="flex items-center">
                     <PageBreadCrumbs/>
                 </div>
+
                 <div className="flex flex-1 rounded-lg border border-dashed shadow-sm h-full">
+                    <Suspense
+                      fallback={
+                        <Loading className="h-full" />
+                      }
+                    >
                     {children}
+                    </Suspense>
                 </div>
             </main>
         </div>
