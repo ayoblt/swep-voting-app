@@ -3,15 +3,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
-        pathname: '/images/**',
-      },
-      {
         protocol: 'https',
-        hostname: 'placehold.co',
+        hostname: 'swep7-production.up.railway.app',
         port: '',
+        pathname: '/images/**',
       },
     ],
   },

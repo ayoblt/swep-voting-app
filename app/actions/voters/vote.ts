@@ -49,6 +49,6 @@ export async function submitVotes(state: any, payload: Payload) {
     }
 
     logout()
-    redirect("/vote/success")
+    redirect(`/vote/success/${payload.collection_id}`)
 
 }
