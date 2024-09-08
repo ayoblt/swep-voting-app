@@ -137,6 +137,7 @@ const Publish = () => {
 
   useEffect(() => {
     if (state.success) {
+      // console.log("success")
       toast.success('Election created successfully');
       resetFormState();
       router.push('/admin/dashboard/elections');
