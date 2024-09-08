@@ -49,5 +49,9 @@ export async function createElection(state: any, formData: FormData) {
 
     const responseData = await response.json();
     revalidatePath('/admin/dashboard/elections');
-    redirect("/admin/dashboard/elections")
+
+    return {
+      success: true,
+      details: responseData.message,
+    };
 }

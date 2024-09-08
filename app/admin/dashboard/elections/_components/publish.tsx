@@ -136,7 +136,11 @@ const Publish = () => {
   const electionInfoList = [electionFormState.electionInfo];
 
   useEffect(() => {
-    if (state.errors) {
+    if (state.success) {
+      toast.success('Election created successfully');
+      resetFormState();
+      router.push('/admin/dashboard/elections');
+    } else if (state.errors) {
       state.errors.forEach((error: string) => {
         toast.error(error);
       });
