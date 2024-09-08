@@ -8,7 +8,7 @@ import {CandidateTable} from "@/components/candidates-table";
 import {Collection} from "@/lib/definitions";
 
 
-const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME || "http://localhost:8000";
+const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME;
 
 
 export default async function Page({ params }: { params: { slug: string } }) {

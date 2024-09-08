@@ -4,8 +4,6 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {ElectionListTable} from "@/app/admin/dashboard/elections/election-list-table";
 
-const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME || "http://localhost:8000";
-
 
 export default async function Election() {
     noStore()

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 
-const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME || "http://localhost:8000";
+const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME;
 
 export default function VoteSuccessPage({params}: {params: {slug: string}}) {
     const collection_id = params.slug
