@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import {Button} from "@/components/ui/button";
 import {Option} from "@/app/(voters)/vote/_components/dashboard";
+import {NEXT_PUBLIC_API_HOSTNAME} from "@/lib/definitions";
 
 export function CandidatesSlide({
     options,
@@ -85,7 +86,7 @@ export function CandidatesSlide({
                     <div className=" h-64 w-64 rounded-full overflow-hidden">
                       <Image
                         src={
-                          `http://${option.image_link}` ||
+                          `${NEXT_PUBLIC_API_HOSTNAME}${option.image_link}` ||
                           '/images/placeholder.png'
                         }
                         alt={option.value}
