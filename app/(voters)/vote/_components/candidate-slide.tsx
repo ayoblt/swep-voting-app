@@ -7,10 +7,10 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import * as React from 'react';
-import {Option, Poll} from './dashboard';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import {Button} from "@/components/ui/button";
+import {Option} from "@/app/(voters)/vote/_components/dashboard";
 
 export function CandidatesSlide({
     options,

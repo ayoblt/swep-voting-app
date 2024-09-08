@@ -8,37 +8,37 @@ import { PositionCombobox} from "@/app/(voters)/vote/_components/combobox";
 import {DoubleArrowRightIcon} from "@radix-ui/react-icons";
 import {useFormState} from "react-dom";
 import {submitVotes} from "@/app/actions/voters/vote";
-import {Collection, Option, Payload, Poll} from "@/lib/definitions";
+import {Payload} from "@/lib/definitions";
 import {SubmitBtn} from "@/components/submit-btn";
 import {toast} from "sonner";
 
-// export interface Option {
-//   id: string;
-//   value: string;
-//   created: string;
-//   image_link?: string;
-// }
-//
-// export interface Poll {
-//   id: string;
-//   title: string;
-//   required: boolean;
-//   no_of_options: number;
-//   created: string;
-//   options: Option[];
-// }
-//
-// interface VotingData {
-//   id: string;
-//   title: string;
-//   start_time: string;
-//   end_time: string;
-//   no_of_polls: number;
-//   created: string;
-//   polls: Poll[];
-// }
+export interface Option {
+  id: string;
+  value: string;
+  created: string;
+  image_link?: string;
+}
 
-export default function Dashboard({ data }: { data: Collection }) {
+export interface Poll {
+  id: string;
+  title: string;
+  required: boolean;
+  no_of_options: number;
+  created: string;
+  options: Option[];
+}
+
+interface VotingData {
+  id: string;
+  title: string;
+  start_time: string;
+  end_time: string;
+  no_of_polls: number;
+  created: string;
+  polls: Poll[];
+}
+
+export default function Dashboard({ data }: { data: VotingData }) {
   // const [timeLeft, setTimeLeft] = useState<number>(5)
   const [selectedPoll, setSelectedPoll] = useState<Poll | null>(null);
   const [votes, setVotes] = useState<{
