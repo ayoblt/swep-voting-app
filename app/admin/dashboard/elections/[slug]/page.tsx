@@ -54,7 +54,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="flex max-lg:flex-col gap-x-4 lg:items-end">
               <h3 className="md:text-lg lg:text-xl font-semibold">Voters Link :</h3>
               <div className="flex items-center gap-x-2">
-                  <Link target="_blank" rel="noopener noreferrer" href={`/login/${collection_id}`} className="border-b text-primary">{`${NEXT_DOMAIN_NAME}/login/${collection_id}`}
+                  <Link target="_blank" rel="noopener noreferrer" href={`/login/${collection_id}`} className="border-b text-primary">{`${NEXT_DOMAIN_NAME}/login/${collection_id.slice(0, 5)}...`}
                   </Link>
                   <CopyToClipboard textToCopy={`${NEXT_DOMAIN_NAME}/login/${collection_id}`} />
               </div>

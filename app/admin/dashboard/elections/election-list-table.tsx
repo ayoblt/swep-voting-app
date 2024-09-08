@@ -26,7 +26,7 @@ const columns: ColumnDef<Collection>[] = [
 
       return (
           <div className="flex items-center gap-x-2">
-              <Link target="_blank" rel="noopener noreferrer" href={`/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}
+              <Link target="_blank" rel="noopener noreferrer" href={`/login/${collection.id.slice(0, 5)}...`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}
               </Link>
               <CopyToClipboard textToCopy={`${NEXT_DOMAIN_NAME}/login/${collection.id}`}/>
           </div>
