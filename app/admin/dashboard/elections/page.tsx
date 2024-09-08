@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore } from 'next/cache';
+
 import { getAllCollection } from '@/lib/dal';
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
@@ -6,7 +6,6 @@ import {ElectionListTable} from "@/app/admin/dashboard/elections/election-list-t
 
 
 export default async function Election() {
-    noStore()
   const collectionData = await getAllCollection();
   // console.log('Collection Data', collectionData);
 

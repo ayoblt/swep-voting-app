@@ -1,4 +1,3 @@
-import { unstable_noStore as noStore } from 'next/cache';
 import {getCollection} from "@/lib/dal";
 import {formatDate, formatTime} from "@/lib/utils";
 import {Separator} from "@/components/ui/separator";
@@ -10,7 +9,6 @@ import CopyToClipboard from "@/components/copy-to-clipboard";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
-    noStore()
     const collection_id = params.slug
     const collection: Collection  = await getCollection(collection_id);
 
