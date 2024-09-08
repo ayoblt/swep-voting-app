@@ -17,7 +17,7 @@ const columns: ColumnDef<Collection>[] = [
     const collection = row.original;
     // console.log(candidate);
 
-    return <Link href={`/admin/dashboard/elections/${collection.id}`} className="text-center flex items-center hover:underline">{collection.title}</Link>
+    return <Link href={`/admin/dashboard/elections/${collection.id}`} className="hover:underline">{collection.title}</Link>
   },
   },
   {
@@ -27,7 +27,7 @@ const columns: ColumnDef<Collection>[] = [
     const collection = row.original;
     // console.log(candidate);
 
-    return <Link href={`${NEXT_DOMAIN_NAME}/login/${collection.id}`} className="text-center flex items-center text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}</Link>
+    return <Link href={`${NEXT_DOMAIN_NAME}/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}</Link>
   },
   },
 ];
