@@ -16,7 +16,7 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-screen grid place-content-center items-center text-center p-10">
+    <div className="h-full w-full grid place-content-center items-center text-center p-10">
       <h2>Something went wrong!</h2>
       <Button variant="link"
         onClick={
