@@ -16,7 +16,7 @@ const CopyToClipboard = ({textToCopy}: {textToCopy: string}) => {
   };
 
   return (
-      <span onClick={copyToClipboard} className="cursor-pointer"><CopyIcon /></span>
+      <span onClick={copyToClipboard} className="cursor-pointer p-2"><CopyIcon /></span>
   );
 };
 
