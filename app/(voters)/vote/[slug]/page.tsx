@@ -1,5 +1,4 @@
 import { getVotersCollection } from '@/lib/dal';
-import {notFound} from "next/navigation";
 import Dashboard from "@/app/(voters)/vote/_components/dashboard";
 
 export default async function VotePage({ params }: { params: { slug: string } }) {

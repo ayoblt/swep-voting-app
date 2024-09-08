@@ -1,15 +1,14 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import { getAllCollection } from '@/lib/dal';
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {ColumnDef} from "@tanstack/react-table";
-import {DataTable} from "@/components/ui/data-table";
 import {ElectionListTable} from "@/app/admin/dashboard/elections/election-list-table";
 
 const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME || "http://localhost:8000";
 
 
 export default async function Election() {
+    noStore()
   const collectionData = await getAllCollection();
   // console.log('Collection Data', collectionData);
 

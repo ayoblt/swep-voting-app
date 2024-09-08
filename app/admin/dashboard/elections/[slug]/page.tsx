@@ -1,4 +1,4 @@
-import ElectionCard from "@/app/admin/dashboard/elections/_components/election-card";
+import { unstable_noStore as noStore } from 'next/cache';
 import {getCollection} from "@/lib/dal";
 import {formatDate, formatTime} from "@/lib/utils";
 import {Separator} from "@/components/ui/separator";
@@ -43,12 +43,17 @@ type Collection = {
 const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME || "http://localhost:8000";
 
 
-
-
 export default async function Page({ params }: { params: { slug: string } }) {
-  const collection_id = params.slug
+    noStore()
+    const collection_id = params.slug
     const collection: Collection  = await getCollection(collection_id);
-  // console.log("Collection",collection)
+
+    let totalCandidates = 0;
+
+    collection.polls.forEach((poll: any) => {
+    totalCandidates += poll.no_of_options;
+    });
+
   return (
       <div className="p-6 w-full space-y-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center">
@@ -67,14 +72,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   <h3 className="text-xl font-semibold">{formatDate(collection.end_time, "short")}</h3>
                   <h3 className="text-xl font-semibold">{formatTime(collection.end_time)}</h3>
               </CollectionMiniCard>
-              <CollectionMiniCard label="Total Eligible Voters">
-                    <h3 className="text-xl font-semibold">{collection.no_of_eligible_voters}</h3>
-              </CollectionMiniCard>
-              <CollectionMiniCard label="Total Eligible Voters">
-                <h3 className="text-xl font-semibold">{collection.no_of_eligible_voters}</h3>
-              </CollectionMiniCard>
+              {/*<CollectionMiniCard label="Total Eligible Voters">*/}
+              {/*      <h3 className="text-xl font-semibold">{collection.no_of_eligible_voters}</h3>*/}
+              {/*</CollectionMiniCard>*/}
               <CollectionMiniCard label="Total Positions">
                 <h3 className="text-xl font-semibold">{collection.no_of_polls}</h3>
+              </CollectionMiniCard>
+              <CollectionMiniCard label="Total Candidates">
+                <h3 className="text-xl font-semibold">{totalCandidates}</h3>
               </CollectionMiniCard>
               <CollectionMiniCard label="Total Votes">
                 <h3 className="text-xl font-semibold">{collection.no_of_votes}</h3>

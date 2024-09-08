@@ -14,6 +14,7 @@ const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
 
 export async function submitVotes(state: any, payload: Payload) {
   const { token } = await verifySession();
+  console.log("submitting form")
 
   // console.log(token);
   // console.log(JSON.stringify(payload))
