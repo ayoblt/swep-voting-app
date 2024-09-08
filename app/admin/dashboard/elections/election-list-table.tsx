@@ -4,6 +4,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import Link from "next/link";
 import {DataTable} from "@/components/ui/data-table";
 import {Collection, NEXT_DOMAIN_NAME} from "@/lib/definitions";
+import CopyToClipboard from "@/components/copy-to-clipboard";
 
 const columns: ColumnDef<Collection>[] = [
   {
@@ -20,17 +21,24 @@ const columns: ColumnDef<Collection>[] = [
   id: 'votingLink',
   header: "Voting Link",
   cell: ({ row }) => {
-    const collection = row.original;
-    // console.log(candidate);
+      const collection = row.original;
+      // console.log(candidate);
 
-    return <Link href={`/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}</Link>
+      return (
+          <div className="flex items-center gap-x-2">
+              <Link href={`/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}
+              </Link>
+              <CopyToClipboard textToCopy={`${NEXT_DOMAIN_NAME}/login/${collection.id}`}/>
+          </div>
+      )
+
   },
   },
 ];
 
-export const ElectionListTable = ({collectionData}: {collectionData: Collection[]}) => {
+export const ElectionListTable = ({collectionData}: { collectionData: Collection[] }) => {
     return (
-        <div className="h-56 overflow-auto relative">
+        <div className="overflow-auto relative">
             <DataTable columns={columns} data={collectionData}/>
         </div>
     )

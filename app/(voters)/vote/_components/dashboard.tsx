@@ -52,6 +52,9 @@ export default function Dashboard({ data }: { data: VotingData }) {
     code: "",
   })
 
+  const hasAtLeastOneVote = Object.values(votes).some((vote) => vote !== null);
+
+
   // useEffect(() => {
   //   const timerId = setInterval(() => {
   //     setTimeLeft((prevTime) => {
@@ -193,9 +196,14 @@ export default function Dashboard({ data }: { data: VotingData }) {
 
             <div className="flex flex-col items-center gap-y-5 px-10">
               <p className="text-2xl items-center justify-center font-bold flex gap-x-3">Scroll <DoubleArrowRightIcon/></p>
-              <form onSubmit={handleSubmitVotes}>
-                <SubmitBtn className="md:self-end w-full" isPending={isPending}>Submit Votes</SubmitBtn>
-              </form>
+              {
+                hasAtLeastOneVote && (
+                      <form onSubmit={handleSubmitVotes}>
+                        <SubmitBtn className="md:self-end w-full" isPending={isPending}>Submit Votes</SubmitBtn>
+                      </form>
+                  )
+              }
+
             </div>
           </main>
         </div>

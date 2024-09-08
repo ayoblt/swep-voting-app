@@ -6,6 +6,7 @@ import Link from "next/link";
 import {CollectionMiniCard} from "@/app/admin/dashboard/elections/[slug]/_components/collection-mini-card";
 import {CandidateTable} from "@/components/candidates-table";
 import {Collection, NEXT_DOMAIN_NAME} from "@/lib/definitions";
+import CopyToClipboard from "@/components/copy-to-clipboard";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -54,7 +55,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <Separator />
           <div className="flex max-lg:flex-col gap-x-4 lg:items-end">
               <h3 className="md:text-lg lg:text-xl font-semibold">Voters Link :</h3>
-              <Link href={`/login/${collection_id}`} className="border-b text-primary">{`${NEXT_DOMAIN_NAME}/login/${collection_id}`}</Link>
+              <div className="flex items-center gap-x-2">
+                  <Link href={`/login/${collection_id}`} className="border-b text-primary">{`${NEXT_DOMAIN_NAME}/login/${collection_id}`}
+                  </Link>
+                  <CopyToClipboard textToCopy={`${NEXT_DOMAIN_NAME}/login/${collection_id}`} />
+              </div>
           </div>
           <Separator />
           <div className="space-y-16">
