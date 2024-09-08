@@ -4,6 +4,8 @@ import App from "next/app";
 const matricNoRegex = /^[A-Z]{3}\/\d{4}\/\d{3}$/i;
 const regNoRegex = /^\d{8}[A-Z]{2}$/;
 export const MAX_FILE_SIZE = 3000000;
+export const NEXT_DOMAIN_NAME = "https://swep-voting-app.vercel.app"
+export const NEXT_PUBLIC_API_HOSTNAME="https://swep7-production.up.railway.app"
 
 export const VoterLoginFormSchema = z.object({
   email: z

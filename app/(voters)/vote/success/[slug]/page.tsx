@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 
-const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME;
-
 export default function VoteSuccessPage({params}: {params: {slug: string}}) {
     const collection_id = params.slug
     return (
@@ -14,7 +12,7 @@ export default function VoteSuccessPage({params}: {params: {slug: string}}) {
             </div>
             <p className="text-lg font-semibold">Your Vote has been Casted successfully. Results will be displayed after Election ends</p>
             <Button variant="link" asChild className="w-fit mx-auto">
-                <a href={`${NEXT_DOMAIN_NAME}/vote/results/${collection_id}`}>View results</a>
+                <Link href={`/vote/results/${collection_id}`}>View results</Link>
             </Button>
         </div>
     )

@@ -4,7 +4,7 @@ import {
   AdminLoginFormState,
   AdminRegisterFormSchema,
   AdminRegisterFormState,
-  AdminVerifyFormState,
+  AdminVerifyFormState, NEXT_PUBLIC_API_HOSTNAME,
 } from '@/lib/definitions';
 import { createSession } from '@/lib/session';
 import { revalidatePath } from 'next/cache';
@@ -12,7 +12,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 // "Google Sans Text", Roboto, sans-serif
 
-const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
+
 // console.log(NEXT_PUBLIC_API_HOSTNAME);
 
 export async function register(

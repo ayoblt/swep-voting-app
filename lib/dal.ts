@@ -3,8 +3,7 @@ import 'server-only';
 import {getSession} from '@/lib/session';
 import {redirect} from 'next/navigation';
 import {cache} from 'react';
-
-const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
+import {NEXT_PUBLIC_API_HOSTNAME} from "@/lib/definitions";
 
 export const verifySession = cache(async () => {
   const session = await getSession();
@@ -126,7 +125,7 @@ export const getVotersCollection = async (collection_id: string) => {
 
 export const getCollectionResult = async (collection_id: string) => {
   const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_HOSTNAME}/api/voters/result?collection_id=${collection_id}`
+      `${NEXT_PUBLIC_API_HOSTNAME}/api/voters/result?collection_id=${collection_id}`
     );
 
   return await response.json();

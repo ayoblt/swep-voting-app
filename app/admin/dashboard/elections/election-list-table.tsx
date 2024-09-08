@@ -3,11 +3,7 @@
 import {ColumnDef} from "@tanstack/react-table";
 import Link from "next/link";
 import {DataTable} from "@/components/ui/data-table";
-import {Collection} from "@/lib/definitions";
-
-const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME;
-
-
+import {Collection, NEXT_DOMAIN_NAME} from "@/lib/definitions";
 
 const columns: ColumnDef<Collection>[] = [
   {
@@ -27,7 +23,7 @@ const columns: ColumnDef<Collection>[] = [
     const collection = row.original;
     // console.log(candidate);
 
-    return <a href={`${NEXT_DOMAIN_NAME}/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}</a>
+    return <Link href={`/login/${collection.id}`} className="text-primary hover:underline">{`${NEXT_DOMAIN_NAME}/login/${collection.id}`}</Link>
   },
   },
 ];

@@ -4,9 +4,9 @@ import { verifySession } from '@/lib/dal';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
+import {NEXT_PUBLIC_API_HOSTNAME} from "@/lib/definitions";
 // "Google Sans Text", Roboto, sans-serif
 
-const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
 
 export async function createElection(state: any, formData: FormData) {
   const { token } = await verifySession();

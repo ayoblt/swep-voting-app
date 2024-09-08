@@ -1,6 +1,7 @@
 'use server';
 
 import {
+  NEXT_PUBLIC_API_HOSTNAME,
   VoterFormState,
   VoterLoginFormSchema,
   VoterVerifyFormState,
@@ -8,7 +9,6 @@ import {
 import { createSession } from '@/lib/session';
 import {redirect} from "next/navigation";
 // "Google Sans Text", Roboto, sans-serif
-const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
 
 export async function login(
   state: VoterFormState,
