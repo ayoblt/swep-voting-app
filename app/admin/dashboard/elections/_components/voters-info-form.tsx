@@ -37,10 +37,10 @@ const votersInfoSchema = z.object({
             const firstItem = file?.item?.(0);
             if (firstItem) {
               const fileType = firstItem.name.split('.').pop();
-              return fileType === 'csv';
+              return fileType === 'csv' || "xlsx";
             }
             return true;
-          }, 'File must be a .csv file.')
+          }, 'File must be a .csv or .xlsx file.')
           .refine((file) => {
             const firstItem = file?.item?.(0);
             if (firstItem) return firstItem.size <= MAX_FILE_SIZE;
