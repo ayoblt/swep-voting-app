@@ -11,16 +11,19 @@ import {
   Position,
   VoterInfo,
 } from '@/lib/definitions';
-import { formatTime, validateElectionFormState } from '@/lib/utils';
+import {cn, formatTime, validateElectionFormState} from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
 import { ColumnDef } from '@tanstack/react-table';
 import { CandidatePosition } from './candidates-form';
 import { toast } from 'sonner';
-import { useFormState } from 'react-dom';
+import {useFormState, useFormStatus} from 'react-dom';
 import { createElection } from '@/app/actions/admin/election';
 import {useEffect, useTransition} from 'react';
 import { useRouter } from 'next/navigation';
 import {ScrollArea} from "@/components/ui/scroll-area";
+// import {SubmitBtn} from "@/components/submit-btn";
+import {Button} from "@/components/ui/button";
+import Spinner from "@/components/icons/spinner";
 import {SubmitBtn} from "@/components/submit-btn";
 
 const FormatCell = ({ children }: { children: React.ReactNode }) => {
@@ -122,6 +125,7 @@ const candidatesColumns: ColumnDef<Candidate>[] = [
   },
 ];
 
+
 const Publish = () => {
   const { currentStep, electionFormState, resetFormState } =
     useElectionFormContext();
@@ -132,7 +136,6 @@ const Publish = () => {
     details: '',
     errors: [],
   });
-  const [isPending, startTransition] = useTransition()
   const electionInfoList = [electionFormState.electionInfo];
 
   useEffect(() => {
@@ -198,11 +201,8 @@ const Publish = () => {
         }
       });
     });
-    startTransition( async () => {
-
       await formAction(formData);
-      // console.log("response for publish",response)
-    })
+
   };
 
   return (
@@ -265,7 +265,6 @@ const Publish = () => {
       <div className="mt-10">
         <div className="flex justify-center">
           <SubmitBtn
-              isPending={isPending}
             className="px-6 py-2 bg-blue-500 text-white rounded-lg"
           >
             Publish
@@ -275,6 +274,8 @@ const Publish = () => {
     </form>
   );
 };
+
+
 
 export default Publish;
 
