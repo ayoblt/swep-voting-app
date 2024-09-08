@@ -26,10 +26,8 @@ export async function submitVotes(state: any, payload: Payload) {
       details: 'API Hostname is not configured.',
     };
   }
-  let redirectPath: string | null = null;
 
-  try {
-    const response = await fetch(
+  const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/voters/submit-vote`,
       {
         method: 'POST',
@@ -52,27 +50,7 @@ export async function submitVotes(state: any, payload: Payload) {
       };
     }
 
-    // const responseData = await response.json();
-    // console.log(`/vote?collection-id=${payload.collection_id}`)
-    // revalidatePath(`/vote/${payload.collection_id}`);
-    // return {
-    //   success: true,
-    //   details: responseData.message,
-    // };
+    logout()
+    redirect("/vote/success")
 
-    redirectPath = "/vote/success"
-
-  } catch (error) {
-    console.error('Network or Server error:', error);
-    return {
-      success: false,
-      code: 'SERVER_ERROR',
-      details: 'A network error occurred. Please try again later.',
-    };
-  } finally {
-    if (redirectPath) {
-      logout()
-      redirect("/vote/success")
-    }
-  }
 }

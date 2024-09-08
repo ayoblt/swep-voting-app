@@ -1,5 +1,3 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-
 export const CollectionMiniCard = ({label, children}: {label: string; children: React.ReactNode}) => {
     return (
         <div className="bg-card w-full h-[150px] p-5 rounded-lg space-y-4 border border-muted shadow-sm">

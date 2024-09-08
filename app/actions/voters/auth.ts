@@ -6,6 +6,7 @@ import {
   VoterVerifyFormState,
 } from '@/lib/definitions';
 import { createSession } from '@/lib/session';
+import {redirect} from "next/navigation";
 // "Google Sans Text", Roboto, sans-serif
 const NEXT_PUBLIC_API_HOSTNAME = process.env.NEXT_PUBLIC_API_HOSTNAME;
 
@@ -34,8 +35,8 @@ export async function login(
       errors: validatedFields.error.flatten().fieldErrors,
       details: 'Email validation unsuccessful',
     };
-  try {
-    const response = await fetch(
+
+  const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/voters/login`,
       {
         method: 'POST',
@@ -58,7 +59,6 @@ export async function login(
     }
 
     const data = await response.json();
-    // console.log('Registration successful:', data);
 
     return {
       success: true,
@@ -67,13 +67,6 @@ export async function login(
         email,
       },
     };
-  } catch (error) {
-    console.error('Error during registration:', error);
-    return {
-      success: false,
-      details: 'An unexpected error occurred. Please try again.',
-    };
-  }
 }
 
 export async function verify(state: VoterVerifyFormState, formData: FormData) {
@@ -97,8 +90,7 @@ export async function verify(state: VoterVerifyFormState, formData: FormData) {
     };
   }
 
-  try {
-    const response = await fetch(
+  const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/voters/verify-code`,
       {
         method: 'POST',
@@ -130,16 +122,5 @@ export async function verify(state: VoterVerifyFormState, formData: FormData) {
     await createSession(token, is_admin, exp);
     // console.log('Created session');
 
-    return {
-      success: true,
-      details: responseData.message,
-    };
-  } catch (error) {
-    console.error('Network or Server error:', error);
-    return {
-      success: false,
-      code: 'SERVER_ERROR',
-      details: 'A network error occurred. Please try again later.',
-    };
-  }
+    redirect(`/vote/${collection_id}`)
 }

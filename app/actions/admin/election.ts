@@ -24,8 +24,7 @@ export async function createElection(state: any, formData: FormData) {
   //   console.log(collection);
   // console.log(formData);
 
-  try {
-    const response = await fetch(
+  const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/manage/collection/create`,
       {
         method: 'POST',
@@ -55,12 +54,4 @@ export async function createElection(state: any, formData: FormData) {
       success: true,
       details: responseData.message,
     };
-  } catch (error) {
-    console.error('Network or Server error:', error);
-    return {
-      success: false,
-      code: 'SERVER_ERROR',
-      details: 'A network error occurred. Please try again later.',
-    };
-  }
 }

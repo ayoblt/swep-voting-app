@@ -44,8 +44,7 @@ export async function register(
       details: 'Email and password validation unsuccessful',
     };
 
-  try {
-    const response = await fetch(
+  const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/manage/account/register`,
       {
         method: 'POST',
@@ -56,7 +55,7 @@ export async function register(
       }
     );
 
-    if (!response.ok) {
+  if (!response.ok) {
       const errorData = await response.json();
       console.error('API Error:', errorData);
       return {
@@ -65,23 +64,16 @@ export async function register(
       };
     }
 
-    const data = await response.json();
+  const data = await response.json();
     // console.log('Registration successful:', data);
 
-    return {
+  return {
       success: true,
       details: data.message,
       data: {
         email,
       },
     };
-  } catch (error) {
-    console.error('Error during registration:', error);
-    return {
-      success: false,
-      details: 'An unexpected error occurred. Please try again.',
-    };
-  }
 }
 
 export async function signin(state: AdminLoginFormState, formData: FormData) {
@@ -105,9 +97,8 @@ export async function signin(state: AdminLoginFormState, formData: FormData) {
       details: 'Both email and password is required',
     };
   }
-  let redirectPath: string | null = null;
-  try {
-    const response = await fetch(
+
+  const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/manage/account/login`,
       {
         method: 'POST',
@@ -123,8 +114,7 @@ export async function signin(state: AdminLoginFormState, formData: FormData) {
       console.error('Login API Error:', errorData);
 
       if (errorData.message === "Account isn't verified") {
-        redirectPath = `/admin/accounts/verify`
-        redirect(redirectPath);
+        redirect(`/admin/accounts/verify`);
       }
 
       return {
@@ -136,29 +126,13 @@ export async function signin(state: AdminLoginFormState, formData: FormData) {
     // console.log('Login API response:', response);
 
     const responseData = await response.json();
-    // console.log('Login successful:', responseData);
 
     const token = responseData.data.token;
     const exp = parseInt(responseData.data.expires_in);
     const is_admin = responseData.data.is_admin;
 
-    // console.log({ token, exp, is_admin });
-
     await createSession(token, is_admin, exp);
-
-    redirectPath = '/admin/dashboard/elections';
-  } catch (error) {
-    console.error('Network or Server error:', error);
-    return {
-      success: false,
-      code: 'SERVER_ERROR',
-      details: 'A network error occurred. Please try again later.',
-    };
-  } finally {
-    if (redirectPath) {
-      redirect('/admin/dashboard/elections');
-    }
-  }
+    redirect('/admin/dashboard/elections');
 }
 
 export async function verify(state: AdminVerifyFormState, formData: FormData) {
@@ -181,8 +155,7 @@ export async function verify(state: AdminVerifyFormState, formData: FormData) {
     };
   }
 
-  try {
-    const response = await fetch(
+  const response = await fetch(
       `${NEXT_PUBLIC_API_HOSTNAME}/api/manage/account/verify`,
       {
         method: 'POST',
@@ -203,20 +176,7 @@ export async function verify(state: AdminVerifyFormState, formData: FormData) {
       };
     }
 
-    const responseData = await response.json();
-
-    return {
-      success: true,
-      details: responseData.message,
-    };
-  } catch (error) {
-    console.error('Network or Server error:', error);
-    return {
-      success: false,
-      code: 'SERVER_ERROR',
-      details: 'A network error occurred. Please try again later.',
-    };
-  }
+    redirect("/admin/accounts/login")
 }
 
 export async function logout() {

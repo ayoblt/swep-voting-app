@@ -4,40 +4,8 @@ import {formatDate, formatTime} from "@/lib/utils";
 import {Separator} from "@/components/ui/separator";
 import Link from "next/link";
 import {CollectionMiniCard} from "@/app/admin/dashboard/elections/[slug]/_components/collection-mini-card";
-import {CandidateTable} from "@/app/admin/dashboard/elections/[slug]/_components/candidates-table";
-
-export type Option = {
-  id: string;
-  value: string;
-  created: string;
-  no_of_votes: number;
-};
-
-type Poll = {
-  id: string;
-  title: string;
-  required: boolean;
-  no_of_options: number;
-  created: string;
-  no_of_votes: number;
-  last_updated: string;
-  options: Option[];
-};
-
-type Collection = {
-  id: string;
-  creator_id: string;
-  title: string;
-  start_time: string;
-  end_time: string;
-  eligible_voters: string;
-  no_of_eligible_voters: number;
-  no_of_polls: number;
-  no_of_votes: number;
-  created: string;
-  last_updated: string;
-  polls: Poll[];
-};
+import {CandidateTable} from "@/components/candidates-table";
+import {Collection} from "@/lib/definitions";
 
 
 const NEXT_DOMAIN_NAME = process.env.NEXT_DOMAIN_NAME || "http://localhost:8000";
@@ -49,6 +17,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     const collection: Collection  = await getCollection(collection_id);
 
     let totalCandidates = 0;
+
 
     collection.polls.forEach((poll: any) => {
     totalCandidates += poll.no_of_options;
@@ -91,16 +60,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <Link href={`${NEXT_DOMAIN_NAME}/login/${collection_id}`} className="border-b text-primary">{`${NEXT_DOMAIN_NAME}/login/${collection_id}`}</Link>
           </div>
           <Separator />
-          {/*<div>*/}
-          {/*    {*/}
-          {/*        collection.polls.map((poll) => (*/}
-          {/*            <div key={poll.id}>*/}
-          {/*                <h3>{poll.title}</h3>*/}
-          {/*                <CandidateTable candidates={poll.options}/>*/}
-          {/*            </div>*/}
-          {/*        ))*/}
-          {/*    }*/}
-          {/*</div>*/}
+          <div className="space-y-16">
+              {
+                  collection.polls.map((poll) => (
+                      <div key={poll.id} className="space-y-4">
+                          <div className="">
+
+                            <h3 className="text-lg font-semibold">{poll.title} <span className="font-normal">|</span> ({poll.no_of_votes} votes)</h3>
+                              {/*<p className="font-medium">{poll.no_of_votes} total votes</p>*/}
+                          </div>
+                          <CandidateTable className="h-fit" candidates={poll.options}/>
+                      </div>
+                  ))
+              }
+          </div>
       </div>
   );
 }

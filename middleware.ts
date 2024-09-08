@@ -15,7 +15,8 @@ export const publicRoutes = [
   '/request-code',
   '/admin/accounts/login',
   '/admin/accounts/register',
-  '/vote/success'
+  '/vote/success',
+    '/vote/results'
 ];
 
 export default async function middleware(req: NextRequest) {
@@ -46,7 +47,11 @@ export default async function middleware(req: NextRequest) {
   const isUserProtectedRoute = userProtectedRoutes.some((route) =>
     path.startsWith(`/vote/${dynamicId}`)
   );
-  const isPublicRoute = publicRoutes.includes(path);
+  const isPublicRoute = publicRoutes.some(
+  (route) =>
+    path.startsWith(route) || path.startsWith(`/vote/results/${dynamicId}`),
+);
+  // const isPublicRoute = publicRoutes.includes(path);
 
   const cookie = cookies().get('session')?.value;
 

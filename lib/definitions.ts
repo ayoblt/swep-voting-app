@@ -208,11 +208,44 @@ export interface Payload {
   votes: Vote[];
 }
 
+// export type Collection = {
+//   id: string;
+//   title: string;
+//   start_time: string;
+//   end_time: string;
+//   no_of_polls: number;
+//   created: string
+// }
+
+export type Option = {
+  id: string;
+  value: string;
+  created: string;
+  no_of_votes: number;
+};
+
+export type Poll = {
+  id: string;
+  title: string;
+  required: boolean;
+  no_of_options: number;
+  created: string;
+  no_of_votes: number;
+  last_updated: string;
+  options: Option[];
+};
+
 export type Collection = {
   id: string;
+  creator_id: string;
   title: string;
   start_time: string;
   end_time: string;
+  eligible_voters: string;
+  no_of_eligible_voters: number;
   no_of_polls: number;
-  created: string
-}
+  no_of_votes: number;
+  created: string;
+  last_updated: string;
+  polls: Poll[];
+};

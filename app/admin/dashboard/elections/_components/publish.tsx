@@ -170,7 +170,7 @@ const Publish = () => {
 
     if (errorMessage) {
       // console.log(errorMessage);
-      toast.warning(errorMessage);
+      toast.error(errorMessage);
     }
 
     const collectionData = convertElectionFormToApiFormat(electionFormState);
