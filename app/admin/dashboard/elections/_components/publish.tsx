@@ -136,11 +136,7 @@ const Publish = () => {
   const electionInfoList = [electionFormState.electionInfo];
 
   useEffect(() => {
-    if (state.success) {
-      toast.success('Election created successfully');
-      resetFormState();
-      router.push('/admin/dashboard/elections');
-    } else if (state.errors) {
+    if (state.errors) {
       state.errors.forEach((error: string) => {
         toast.error(error);
       });
@@ -199,7 +195,7 @@ const Publish = () => {
     });
     startTransition( async () => {
 
-      const response = await formAction(formData);
+      await formAction(formData);
       // console.log("response for publish",response)
     })
   };
