@@ -56,17 +56,13 @@ export const validateElectionFormState = (formState: ElectionFormState) => {
 };
 
 function isIsoDateString(value: string) {
-  // Regular expression to validate the ISO 8601 date format
   const isoDatePattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
-
-  // Check if the value matches the ISO 8601 format
   if (!isoDatePattern.test(value)) {
     return false;
   }
 
-  // Use Date object to check if the date is valid
   const date = new Date(value);
-  return !isNaN(date.getTime()); // Check if the date is a valid number
+  return !isNaN(date.getTime());
 }
 
 export function formatTime(timeString: string) {
@@ -74,7 +70,7 @@ export function formatTime(timeString: string) {
     const [hours, minutes] = timeString.split(':').map(Number);
     const date = new Date();
     date.setHours(hours, minutes);
-    date.setHours(date.getHours() + 1);
+    date.setHours(date.getHours());
     return date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
@@ -82,7 +78,6 @@ export function formatTime(timeString: string) {
     });
   } else {
     const date = new Date(timeString);
-    date.setHours(date.getHours() + 1);
     return date.toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',

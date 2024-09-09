@@ -131,7 +131,6 @@ const EditCandidateDialog = (candidate: Candidate) => {
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
 
-      // Clean up memory when component unmounts
       return () => {
         URL.revokeObjectURL(previewUrl);
         setImagePreview('');
@@ -163,14 +162,14 @@ const EditCandidateDialog = (candidate: Candidate) => {
     const updatedPositionId =
       values.position === '0' ? 0 : parseInt(values.position);
 
-    // Prepare the candidate update data
+
     const updateData: Partial<Candidate> = {
       id: candidate.id,
       name: values.name || candidate.name,
       image: imageFile || candidate.image,
     };
 
-    // Only add positionId if it has changed
+
     if (updatedPositionId !== candidate.positionId) {
       updateData.positionId = updatedPositionId;
     }
@@ -378,7 +377,7 @@ const CandidatesForm = () => {
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
 
-      // Clean up memory when component unmounts
+
       return () => {
         URL.revokeObjectURL(previewUrl);
         setImagePreview('');

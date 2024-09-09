@@ -28,7 +28,7 @@ export function CandidatesSlide({
 }) {
   const [hovered, setHovered] = React.useState<number | null>(null);
 
-  // Check if options is undefined or empty
+
   if (!options) {
     return (
       <div className="grid place-content-center place-items-center h-screen w-full">

@@ -19,6 +19,12 @@ export async function createElection(state: any, formData: FormData) {
       details: 'API Hostname is not configured.',
     };
   }
+
+  // const formDataObject = {};
+  //   formData.forEach((value, key: string) => {
+  //     formDataObject[key] = value;
+  //   });
+  // console.log("formDatatObject", formDataObject)
   //   const collection = formData.get('collection');
 
   //   console.log(collection);
@@ -48,7 +54,8 @@ export async function createElection(state: any, formData: FormData) {
     }
 
     const responseData = await response.json();
-    revalidatePath("/admin/dashboard/elections")
+    console.log("done")
+    // revalidatePath("/admin/dashboard/elections")
     return {
       success: true,
       details: responseData.message,

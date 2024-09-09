@@ -23,6 +23,7 @@ import { useRouter } from 'next/navigation';
 import {Button} from "@/components/ui/button";
 import Spinner from "@/components/icons/spinner";
 import {SubmitBtn} from "@/components/submit-btn";
+import {PrevButton} from "@/app/admin/dashboard/elections/_components/step-buttons";
 
 const FormatCell = ({ children }: { children: React.ReactNode }) => {
   return <div className="font-medium">{children}</div>;
@@ -141,7 +142,7 @@ const Publish = () => {
     if(state.details) {
       setPending(false)
       if (state.success) {
-        // console.log("success")
+        console.log("success")
         toast.success('Election created successfully');
         resetFormState();
         router.push('/admin/dashboard/elections');
@@ -169,10 +170,15 @@ const Publish = () => {
     ? [electionFormState.electionInfo]
     : [];
 
+  console.log(electionInfoArray)
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPending(true)
+    console.log(electionFormState.electionInfo.startTime)
+    console.log(electionFormState.electionInfo.endTime)
     const errorMessage = validateElectionFormState(electionFormState);
+    console.log("electionformstate", electionFormState)
     // console.log({ electionFormState });
 
     if (errorMessage) {
@@ -181,7 +187,7 @@ const Publish = () => {
     }
 
     const collectionData = convertElectionFormToApiFormat(electionFormState);
-    // console.log('Collection Data', collectionData);
+    console.log('Collection Data', collectionData);
     const formData = new FormData();
     formData.append('collection', JSON.stringify(collectionData));
 
@@ -193,6 +199,8 @@ const Publish = () => {
     } else {
       console.error('No voters file available to append.');
     }
+
+    console.log("CollectionData", {collectionData})
 
     collectionData.polls.forEach((poll, pollIndex) => {
       poll.options.forEach((option, optionIndex) => {
@@ -264,9 +272,10 @@ const Publish = () => {
         {/*</ScrollArea>*/}
       </Card>
 
-      <div className="mt-10">
-        <div className="flex justify-center">
-          <SubmitBtn pending={pending} className="px-6 py-2 bg-blue-500 text-white rounded-lg">Publish</SubmitBtn>
+      <div className="mt-10 px-6">
+        <div className="flex justify-between">
+          <PrevButton />
+          <SubmitBtn pending={pending} className="w-fit px-6 py-2 bg-blue-500 text-white rounded-lg">Publish</SubmitBtn>
         </div>
       </div>
     </form>
@@ -299,45 +308,72 @@ const convertElectionFormToApiFormat = (
 ): CollectionData => {
   const { electionInfo, positions, candidates, voterInfo } = formData;
 
-  // Convert date and time to ISO format for start and end times
   // console.log(electionInfo)
   const startDateTime = new Date(
     `${electionInfo.startDate}T${electionInfo.startTime}:00`
-  ).toISOString();
-  // console.log(startDateTime);
+  ).toLocaleString();
+
+  console.log(electionInfo.startDate)
+  console.log(startDateTime);
+
   const endDateTime = new Date(
     `${electionInfo.endDate}T${electionInfo.endTime}:00`
-  ).toISOString();
-  // console.log(endDateTime);
+  ).toLocaleString();
 
-  // Map positions and candidates to API polls format
+  console.log(endDateTime);
+
+
   const polls: Poll[] = positions.map((position) => {
-    // Get candidates for each position
+
     const positionCandidates = candidates.filter(
       (candidate) => candidate.positionId === position.id
     );
 
-    // Map candidates to options
+
     const options: Option[] = positionCandidates.map((candidate) => ({
       value: candidate.name,
-      image: candidate.image, // Assuming image is already a File object
+      image: candidate.image,
     }));
 
     return {
       title: position.title,
-      required: true, // Assuming each poll is required
+      required: true,
       options: options,
     };
   });
 
-  // Construct the final API data object
+
   const collectionData: CollectionData = {
     title: electionInfo.title,
     start_time: startDateTime,
     end_time: endDateTime,
-    eligible_voters: voterInfo.votersFile, // Assuming it's already a File object
+    eligible_voters: voterInfo.votersFile,
     polls: polls,
   };
 
+  console.log("colectio", collectionData)
+
   return collectionData;
 };
+
+/*
+const startDateTimeLocale = new Date(
+    `${electionInfo.startDate}T${electionInfo.startTime}:00`
+  );
+
+  startDateTimeLocale.setHours(startDateTimeLocale.getHours() + 1)
+  const startDateTime = startDateTimeLocale.toISOString();
+
+  console.log(electionInfo.startDate)
+  console.log(startDateTime);
+
+  const endDateTimeLocale = new Date(
+    `${electionInfo.endDate}T${electionInfo.endTime}:00`
+  );
+
+  endDateTimeLocale.setHours(endDateTimeLocale.getHours() + 1)
+  const endDateTime = endDateTimeLocale.toISOString();
+
+  console.log(endDateTime);*/
+
+
