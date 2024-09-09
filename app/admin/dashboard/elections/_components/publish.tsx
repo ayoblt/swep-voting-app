@@ -311,14 +311,14 @@ const convertElectionFormToApiFormat = (
   // console.log(electionInfo)
   const startDateTime = new Date(
     `${electionInfo.startDate}T${electionInfo.startTime}:00`
-  ).toLocaleString();
+  ).toISOString();
 
   console.log(electionInfo.startDate)
   console.log(startDateTime);
 
   const endDateTime = new Date(
     `${electionInfo.endDate}T${electionInfo.endTime}:00`
-  ).toLocaleString();
+  ).toISOString();
 
   console.log(endDateTime);
 

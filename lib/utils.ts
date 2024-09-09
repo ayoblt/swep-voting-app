@@ -70,7 +70,7 @@ export function formatTime(timeString: string) {
     const [hours, minutes] = timeString.split(':').map(Number);
     const date = new Date();
     date.setHours(hours, minutes);
-    date.setHours(date.getHours());
+    date.setHours(date.getHours() + 1)
     return date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
