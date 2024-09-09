@@ -11,17 +11,15 @@ import {
   Position,
   VoterInfo,
 } from '@/lib/definitions';
-import {cn, formatTime, validateElectionFormState} from '@/lib/utils';
+import { formatTime, validateElectionFormState } from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
 import { ColumnDef } from '@tanstack/react-table';
 import { CandidatePosition } from './candidates-form';
 import { toast } from 'sonner';
-import {useFormState, useFormStatus} from 'react-dom';
+import {useFormState} from 'react-dom';
 import { createElection } from '@/app/actions/admin/election';
-import {useEffect, useTransition} from 'react';
+import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
-import {ScrollArea} from "@/components/ui/scroll-area";
-// import {SubmitBtn} from "@/components/submit-btn";
 import {Button} from "@/components/ui/button";
 import Spinner from "@/components/icons/spinner";
 import {SubmitBtn} from "@/components/submit-btn";
@@ -127,6 +125,7 @@ const candidatesColumns: ColumnDef<Candidate>[] = [
 
 
 const Publish = () => {
+  const [pending, setPending] = useState(false)
   const { currentStep, electionFormState, resetFormState } =
     useElectionFormContext();
   const router = useRouter();
@@ -136,18 +135,21 @@ const Publish = () => {
     details: '',
     errors: [],
   });
-  const electionInfoList = [electionFormState.electionInfo];
+  // const electionInfoList = [electionFormState.electionInfo];
 
   useEffect(() => {
-    if (state.success) {
-      // console.log("success")
-      toast.success('Election created successfully');
-      resetFormState();
-      router.push('/admin/dashboard/elections');
-    } else if (state.errors) {
-      state.errors.forEach((error: string) => {
-        toast.error(error);
-      });
+    if(state.details) {
+      setPending(false)
+      if (state.success) {
+        // console.log("success")
+        toast.success('Election created successfully');
+        resetFormState();
+        router.push('/admin/dashboard/elections');
+      } else if (state.errors) {
+        state.errors.forEach((error: string) => {
+          toast.error(error);
+        });
+      }
     }
   }, [state, router]);
 
@@ -169,6 +171,7 @@ const Publish = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setPending(true)
     const errorMessage = validateElectionFormState(electionFormState);
     // console.log({ electionFormState });
 
@@ -201,8 +204,7 @@ const Publish = () => {
         }
       });
     });
-      await formAction(formData);
-
+    await formAction(formData);
   };
 
   return (
@@ -264,18 +266,12 @@ const Publish = () => {
 
       <div className="mt-10">
         <div className="flex justify-center">
-          <SubmitBtn
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg"
-          >
-            Publish
-          </SubmitBtn>
+          <SubmitBtn pending={pending} className="px-6 py-2 bg-blue-500 text-white rounded-lg">Publish</SubmitBtn>
         </div>
       </div>
     </form>
   );
 };
-
-
 
 export default Publish;
 

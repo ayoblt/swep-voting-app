@@ -176,7 +176,10 @@ export async function verify(state: AdminVerifyFormState, formData: FormData) {
       };
     }
 
-    redirect("/admin/accounts/login")
+    return {
+      success: true,
+      details: "Account Verification Successful"
+    }
 }
 
 export async function logout() {

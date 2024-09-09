@@ -4,6 +4,8 @@ import { Logo } from '@/components/logo';
 import LogoutBtn from '@/components/logout-btn';
 import { cn } from '@/lib/utils';
 import { Poll } from './dashboard';
+import {useFormStatus} from "react-dom";
+
 
 export const SideBar = ({
   polls,
@@ -41,7 +43,7 @@ export const SideBar = ({
 
         <div className="mt-auto">
 
-            <LogoutBtn/>
+            <LogoutBtn />
         </div>
     </>
   );

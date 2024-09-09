@@ -24,21 +24,24 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useFormState, useFormStatus } from 'react-dom';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
-import { useEffect, useTransition } from 'react';
+import {useEffect, useState, useTransition} from 'react';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { VoterLoginFormSchema } from '@/lib/definitions';
 import { login } from '@/app/actions/voters/auth';
 import { useAppContext } from '@/hooks/app-hook';
-import { SubmitBtn } from '../submit-btn';
+import {Button} from "@/components/ui/button";
+import Spinner from "@/components/icons/spinner";
+import {SubmitBtn} from "@/components/submit-btn";
 
 function ErrorMessage({ children }: { children: React.ReactNode }) {
   const { pending } = useFormStatus();
   return <>{!pending && <>{children}</>}</>;
 }
 
+
 export function VoterLoginForm({ collection_id }: { collection_id: string }) {
-  const [isPending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const router = useRouter();
   const { setEmail, setCollectionId } = useAppContext();
   const [state, formAction] = useFormState(login, {
@@ -59,6 +62,7 @@ export function VoterLoginForm({ collection_id }: { collection_id: string }) {
 
   useEffect(() => {
     if (state.details) {
+      setPending(false);
       if (state.success && state.data?.email) {
         setCollectionId(collection_id);
         setEmail(state.data?.email);
@@ -75,16 +79,16 @@ export function VoterLoginForm({ collection_id }: { collection_id: string }) {
   }, [state, router, collection_id]);
 
 
-  async function onSubmit(values: z.infer<typeof VoterLoginFormSchema>) {
+  function onSubmit(values: z.infer<typeof VoterLoginFormSchema>) {
     if (!collection_id) {
       toast.error(
         'Collection ID is not found. Please check your email for the correct link.'
       );
       return;
     }
-    startTransition(async () => {
-      await formAction({ email: values.email, collection_id });
-    });
+    setPending(true);
+    formAction({ email: values.email, collection_id });
+
     // console.log(values);
   }
 
@@ -138,9 +142,7 @@ export function VoterLoginForm({ collection_id }: { collection_id: string }) {
             </div>
           </CardContent>
           <CardFooter>
-            <SubmitBtn isPending={isPending} className="h-9 md:h-11 rounded-xl">
-              Login
-            </SubmitBtn>
+            <SubmitBtn pending={pending} className="h-9 md:h-11 rounded-xl">Login</SubmitBtn>
           </CardFooter>
         </form>
       </Form>

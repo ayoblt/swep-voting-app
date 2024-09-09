@@ -34,9 +34,10 @@ import { useFormState } from 'react-dom';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useFormStatus } from 'react-dom';
 import { ErrorMessage } from '../error-message';
-import { SubmitBtn } from '../submit-btn';
-import { useEffect, useTransition } from 'react';
+import {useEffect, useState} from 'react';
 import { verify } from '@/app/actions/voters/auth';
+import Spinner from "@/components/icons/spinner";
+import {SubmitBtn} from "@/components/submit-btn";
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -44,8 +45,9 @@ const FormSchema = z.object({
   }),
 });
 
+
 export function VoterInputOTPForm() {
-  const [isPending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false)
   const { email, collection_id } = useAppContext();
   const [state, formAction] = useFormState(verify, {
     success: false,
@@ -63,13 +65,15 @@ export function VoterInputOTPForm() {
 
   useEffect(() => {
     if (state.details) {
+      setPending(false)
       if (!state.success) {
         toast.error(state.details);
       }
     }
   }, [state.details, state.success, router, collection_id]);
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    setPending(true)
     const formData = new FormData();
 
     if (!collection_id) {
@@ -88,9 +92,9 @@ export function VoterInputOTPForm() {
     formData.append('code', data.pin);
     formData.append('email', email);
     formData.append('collection_id', collection_id);
-    startTransition(async () => {
-      await formAction(formData);
-    });
+
+    formAction(formData);
+
   }
 
   return (
@@ -146,9 +150,7 @@ export function VoterInputOTPForm() {
               />
             </div>
           </CardContent>
-          <SubmitBtn isPending={isPending} className="h-9 md:h-11 rounded-xl">
-            Verify
-          </SubmitBtn>
+          <SubmitBtn pending={pending} className=" h-9 md:h-11 rounded-xl">Verify</SubmitBtn>
         </form>
       </Form>
     </Card>

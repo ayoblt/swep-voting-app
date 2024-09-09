@@ -13,15 +13,34 @@ import { Label } from '@/components/ui/label';
 import { useFormState, useFormStatus } from 'react-dom';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
-import { Checkbox } from '../ui/checkbox';
 import { signin } from '@/app/actions/admin/auth';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { SubmitBtn } from '../submit-btn';
+import {Button} from "@/components/ui/button";
+import Spinner from "@/components/icons/spinner";
+
+
 function ErrorMessage({ children }: { children: React.ReactNode }) {
   const { pending } = useFormStatus();
   return <>{!pending && <>{children}</>}</>;
+}
+
+function SubmitBtn() {
+  const { pending } = useFormStatus();
+
+  console.log(pending);
+  return (
+    <Button
+      className={
+        'w-full h-11 md:h-14 font-bold text-base bg-secondary dark:bg-primary hover:dark:bg-primary/80 text-white hover:bg-secondary/90'}
+      type="submit"
+      aria-disabled={pending}
+      disabled={pending}
+    >
+      {pending ? <Spinner className="w-7 h-7" /> : "Login"}
+    </Button>
+  );
 }
 
 export function AdminSigninForm() {
@@ -115,7 +134,7 @@ export function AdminSigninForm() {
           {/*</div>*/}
         </CardContent>
         <CardFooter>
-          <SubmitBtn>Login</SubmitBtn>
+          <SubmitBtn />
         </CardFooter>
         <CardFooter>
           <p>

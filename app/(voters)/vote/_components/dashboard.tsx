@@ -6,11 +6,13 @@ import { SideBar } from './sidebar';
 import { CandidatesSlide } from './candidate-slide';
 import { PositionCombobox} from "@/app/(voters)/vote/_components/combobox";
 import {DoubleArrowRightIcon} from "@radix-ui/react-icons";
-import {useFormState} from "react-dom";
+import {useFormState, useFormStatus} from "react-dom";
 import {submitVotes} from "@/app/actions/voters/vote";
 import {Payload} from "@/lib/definitions";
-import {SubmitBtn} from "@/components/submit-btn";
 import {toast} from "sonner";
+import {Button} from "@/components/ui/button";
+import Spinner from "@/components/icons/spinner";
+import {SubmitBtn} from "@/components/submit-btn";
 
 export interface Option {
   id: string;
@@ -38,13 +40,14 @@ interface VotingData {
   polls: Poll[];
 }
 
+
 export default function Dashboard({ data }: { data: VotingData }) {
   // const [timeLeft, setTimeLeft] = useState<number>(5)
+  const [pending, setPending] = useState(false)
   const [selectedPoll, setSelectedPoll] = useState<Poll | null>(null);
   const [votes, setVotes] = useState<{
     [poll_id: string]: { option_id: string; option_value: string } | null;
   }>({});
-  const [isPending, startTransition] = useTransition()
   // const submitBtnRef = useRef<HTMLButtonElement | null>(null);
   const [state, formAction] = useFormState(submitVotes, {
     success: false,
@@ -75,7 +78,8 @@ export default function Dashboard({ data }: { data: VotingData }) {
 
   useEffect(() => {
     // console.log(state)
-    if (state) {
+    if (state.details) {
+      setPending(false)
       if (state.success) {
         toast.success('Your votes has been submitted successfully');
         // console.log('success');
@@ -135,6 +139,7 @@ export default function Dashboard({ data }: { data: VotingData }) {
     // if (e) {
     // }
       e.preventDefault()
+    setPending(true)
     // console.log('submitting')
     // console.log(votes)
 
@@ -147,16 +152,15 @@ export default function Dashboard({ data }: { data: VotingData }) {
       })),
     };
     // console.log(payload)
-    startTransition( async () => {
-      await formAction(payload)
-    });
+     formAction(payload)
+
   }
 
-  const formatTimeLeft = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-  };
+  // const formatTimeLeft = (seconds: number) => {
+  //   const minutes = Math.floor(seconds / 60);
+  //   const remainingSeconds = seconds % 60;
+  //   return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  // };
   return (
       <div className="grid min-h-screen w-full relative">
         {/*<div className="fixed max-md:flex-col right-10 sm:right-16 top-20 flex justify-between items-center gap-x-5">*/}
@@ -199,7 +203,7 @@ export default function Dashboard({ data }: { data: VotingData }) {
               {
                 hasAtLeastOneVote && (
                       <form onSubmit={handleSubmitVotes}>
-                        <SubmitBtn className="md:self-end w-full" isPending={isPending}>Submit Votes</SubmitBtn>
+                        <SubmitBtn pending={pending} className="md:self-end w-full">Submit Votes</SubmitBtn>
                       </form>
                   )
               }

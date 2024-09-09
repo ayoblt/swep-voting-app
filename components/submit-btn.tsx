@@ -6,15 +6,14 @@ import { Button } from './ui/button';
 import Spinner from './icons/spinner';
 
 export function SubmitBtn({
-  isPending,
+  pending,
   className,
-  children,
+    children
 }: {
-  isPending?: boolean;
+  pending?: boolean;
   className?: string;
   children: React.ReactNode;
 }) {
-  const { pending } = useFormStatus();
 
   // console.log(pending);
   return (
@@ -24,10 +23,10 @@ export function SubmitBtn({
         className
       )}
       type="submit"
-      aria-disabled={pending || isPending}
-      disabled={pending || isPending}
+      aria-disabled={pending}
+      disabled={pending}
     >
-      {pending || isPending ? <Spinner className="w-7 h-7" /> : <>{children}</>}
+      {pending ? <Spinner className="w-7 h-7" /> : <>{children}</>}
     </Button>
   );
 }

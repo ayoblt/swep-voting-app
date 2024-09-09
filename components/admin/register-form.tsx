@@ -21,7 +21,24 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/hooks/app-hook';
 import { ErrorMessage } from '../error-message';
-import { SubmitBtn } from '../submit-btn';
+import Spinner from "@/components/icons/spinner";
+
+function SubmitBtn() {
+  const { pending } = useFormStatus();
+
+  console.log(pending);
+  return (
+    <Button
+      className={
+        'w-full h-11 md:h-14 font-bold text-base bg-secondary dark:bg-primary hover:dark:bg-primary/80 text-white hover:bg-secondary/90'}
+      type="submit"
+      aria-disabled={pending}
+      disabled={pending}
+    >
+      {pending ? <Spinner className="w-7 h-7" /> : "Register"}
+    </Button>
+  );
+}
 
 export function AdminRegisterForm() {
   const router = useRouter();
@@ -147,7 +164,7 @@ export function AdminRegisterForm() {
           </div> */}
         </CardContent>
         <CardFooter>
-          <SubmitBtn>Register</SubmitBtn>
+          <SubmitBtn />
         </CardFooter>
         <CardFooter>
           <p>
