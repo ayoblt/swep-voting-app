@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import {Button} from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Error({
   error,
@@ -17,15 +18,20 @@ export default function Error({
 
   return (
     <div className="h-full w-full grid place-content-center items-center text-center p-10">
-      <h2>Something went wrong!</h2>
-      <Button variant="link"
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </Button>
+        <div className="relative mb-8">
+
+            <Image src="/images/something-went-wrong.gif" alt="something went wrong" width={300} height={300}
+                   className="object-cover object-center mx-auto"/>
+        </div>
+        <h2>Something went wrong!</h2>
+        <Button variant="link"
+                onClick={
+                    // Attempt to recover by trying to re-render the segment
+                    () => reset()
+                }
+        >
+            Try again
+        </Button>
     </div>
   )
 }

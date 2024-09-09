@@ -9,7 +9,7 @@ export default function NotFound({ message }: { message: string }) {
       </h2>
       <div className="w-fit mb-8">
         <Image
-          src="/images/pablita-695.png"
+          src="/images/not-found.png"
           alt="not found"
           width={400}
           height={400}
@@ -19,7 +19,7 @@ export default function NotFound({ message }: { message: string }) {
       <div>
         <Link
           href="/"
-          className="text-secondary hover:no-underline hover:font-medium underline"
+          className="hover:no-underline hover:font-medium underline"
         >
           Resend Link
         </Link>

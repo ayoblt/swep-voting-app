@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn('relative', dmSans.className)} suppressHydrationWarning>
+      <body className={cn(' min-h-screen', dmSans.className)} suppressHydrationWarning>
         <AppProvider>
           <ThemeProvider
             attribute="class"
