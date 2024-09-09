@@ -9,7 +9,6 @@ import {
   ElectionFormState,
   ElectionInfo,
   Position,
-  VoterInfo,
 } from '@/lib/definitions';
 import { formatTime, validateElectionFormState } from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
@@ -20,10 +19,9 @@ import {useFormState} from 'react-dom';
 import { createElection } from '@/app/actions/admin/election';
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
-import {Button} from "@/components/ui/button";
-import Spinner from "@/components/icons/spinner";
 import {SubmitBtn} from "@/components/submit-btn";
 import {PrevButton} from "@/app/admin/dashboard/elections/_components/step-buttons";
+
 
 const FormatCell = ({ children }: { children: React.ReactNode }) => {
   return <div className="font-medium">{children}</div>;
@@ -141,12 +139,7 @@ const Publish = () => {
   useEffect(() => {
     if(state.details) {
       setPending(false)
-      if (state.success) {
-        console.log("success")
-        toast.success('Election created successfully');
-        resetFormState();
-        router.push('/admin/dashboard/elections');
-      } else if (state.errors) {
+      if (state.errors) {
         state.errors.forEach((error: string) => {
           toast.error(error);
         });

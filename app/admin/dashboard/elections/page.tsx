@@ -1,4 +1,3 @@
-
 import { getAllCollection } from '@/lib/dal';
 import Link from "next/link";
 import {Button} from "@/components/ui/button";

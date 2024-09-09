@@ -1,10 +1,9 @@
 'use server';
 
 import { verifySession } from '@/lib/dal';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { NextRequest } from 'next/server';
 import {NEXT_PUBLIC_API_HOSTNAME} from "@/lib/definitions";
+import {revalidatePath} from "next/cache";
 // "Google Sans Text", Roboto, sans-serif
 
 
@@ -53,11 +52,6 @@ export async function createElection(state: any, formData: FormData) {
       };
     }
 
-    const responseData = await response.json();
-    console.log("done")
-    revalidatePath("/admin/dashboard/elections")
-    return {
-      success: true,
-      details: responseData.message,
-    };
+    revalidatePath("/admin/dasboard/elections")
+    redirect("/admin/dashboard/elections")
 }
